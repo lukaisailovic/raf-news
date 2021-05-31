@@ -41,6 +41,9 @@ public class Post {
     @JoinTable(name = "tags_posts", joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private List<Tag> tags = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
     @PrePersist
     protected void onCreate() {
         created = new Date(System.currentTimeMillis());
@@ -53,6 +56,14 @@ public class Post {
     }
 
     public Post() {
+    }
+
+    public List<Comment> getComments() {
+        return Collections.unmodifiableList(comments);
+    }
+    public void addComment(Comment comment){
+        comment.setPost(this);
+        comments.add(comment);
     }
 
     public List<Tag> getTags() {
