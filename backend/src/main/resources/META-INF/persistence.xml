@@ -7,6 +7,7 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>news.raf.backend.entities.User</class>
         <class>news.raf.backend.entities.Category</class>
+        <class>news.raf.backend.entities.Post</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/raf-news" />

@@ -3,6 +3,10 @@ package news.raf.backend.entities;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -32,7 +36,20 @@ public class User {
     @Column(name = "active", nullable = false)
     private boolean active = false;
 
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
+    private List<Post> posts;
+
     public User() {
+        posts = new ArrayList<>();
+    }
+
+    public List<Post> getPosts() {
+        return Collections.unmodifiableList(posts);
+    }
+
+    public void addPost(Post post){
+        post.setAuthor(this);
+        posts.add(post);
     }
 
     public String getId() {
