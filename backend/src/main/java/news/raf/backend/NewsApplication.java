@@ -7,6 +7,7 @@ import news.raf.backend.repositories.interfaces.UserRepositoryInterface;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.process.internal.RequestScoped;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.ServerProperties;
 
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
@@ -27,6 +28,9 @@ public class NewsApplication extends ResourceConfig {
         };
         register(binder);
 
+        property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
+
+        packages("news.raf.backend.authentication");
         packages("news.raf.backend.resources");
     }
 }
