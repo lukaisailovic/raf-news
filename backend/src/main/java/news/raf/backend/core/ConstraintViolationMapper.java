@@ -19,7 +19,7 @@ public class ConstraintViolationMapper implements ExceptionMapper<ConstraintViol
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList());
 
-        return Response.status(Response.Status.BAD_REQUEST).entity(messages).build();
+        return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data(messages).build();
     }
 
 }

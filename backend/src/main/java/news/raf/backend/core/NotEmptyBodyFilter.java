@@ -4,7 +4,6 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-import java.io.IOException;
 import java.util.List;
 
 @Provider
@@ -16,9 +15,7 @@ public class NotEmptyBodyFilter implements ContainerRequestFilter {
         int contentLength = Integer.parseInt(headerArray.get(0));
         if (contentLength == 0){
             String message = "Content length is "+contentLength;
-            requestContext.abortWith(Response.status(Response.Status.BAD_REQUEST)
-                    .entity(message)
-                    .build());
+            requestContext.abortWith(ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data(message).build());
         }
 
 
