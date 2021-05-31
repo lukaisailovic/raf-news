@@ -5,20 +5,20 @@ import javax.validation.constraints.NotNull;
 
 public class SignUpRequest {
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Email cannot be empty")
+    @NotEmpty(message = "Email cannot be empty")
     private String email;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "First name cannot be empty")
+    @NotEmpty(message = "First name cannot be empty")
     private String firstName;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Last name cannot be empty")
+    @NotEmpty(message = "Last name cannot be empty")
     private String lastName;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "Password cannot be empty")
+    @NotEmpty(message = "Password cannot be empty")
     private String password;
 
     public SignUpRequest() {

@@ -27,7 +27,7 @@ public class NewsApplication extends ResourceConfig {
             }
         };
         register(binder);
-
+        register(new ConstraintViolationMapper());
         property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
 
         packages("news.raf.backend.authentication");
