@@ -16,8 +16,7 @@ public class NotEmptyBodyFilter implements ContainerRequestFilter {
         List<String> headerArray = requestContext.getHeaders().get("Content-Length");
         int contentLength = Integer.parseInt(headerArray.get(0));
         if (contentLength == 0){
-            String message = "Content length is "+contentLength;
-            requestContext.abortWith(ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data(message).build());
+            requestContext.abortWith(ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("Request body cannot be empty").build());
         }
 
 
