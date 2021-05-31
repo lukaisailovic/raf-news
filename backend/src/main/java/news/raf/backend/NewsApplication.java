@@ -2,6 +2,8 @@ package news.raf.backend;
 
 import news.raf.backend.repositories.EntityManagerFactoryProvider;
 import news.raf.backend.repositories.EntityManagerProvider;
+import news.raf.backend.repositories.UserRepository;
+import news.raf.backend.repositories.interfaces.UserRepositoryInterface;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.process.internal.RequestScoped;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -18,6 +20,7 @@ public class NewsApplication extends ResourceConfig {
         AbstractBinder binder = new AbstractBinder() {
             @Override
             protected void configure() {
+                this.bind(UserRepository.class).to(UserRepositoryInterface.class).in(Singleton.class);
                 this.bindFactory(EntityManagerFactoryProvider.class).to(EntityManagerFactory.class).in(Singleton.class);
                 this.bindFactory(EntityManagerProvider.class).proxy(true).proxyForSameScope(false).to(EntityManager.class).in(RequestScoped.class);
             }
