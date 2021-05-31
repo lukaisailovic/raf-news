@@ -8,6 +8,7 @@
         <class>news.raf.backend.entities.User</class>
         <class>news.raf.backend.entities.Category</class>
         <class>news.raf.backend.entities.Post</class>
+        <class>news.raf.backend.entities.Tag</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/raf-news" />

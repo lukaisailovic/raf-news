@@ -5,6 +5,9 @@ import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -34,6 +37,10 @@ public class Post {
     @JoinColumn(name = "author_id")
     private User author;
 
+    @ManyToMany
+    @JoinTable(name = "tags_posts", joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private List<Tag> tags = new ArrayList<>();
+
     @PrePersist
     protected void onCreate() {
         created = new Date(System.currentTimeMillis());
@@ -46,6 +53,13 @@ public class Post {
     }
 
     public Post() {
+    }
+
+    public List<Tag> getTags() {
+        return Collections.unmodifiableList(tags);
+    }
+    public void addTag(Tag tag){
+        tags.add(tag);
     }
 
     public String getId() {
