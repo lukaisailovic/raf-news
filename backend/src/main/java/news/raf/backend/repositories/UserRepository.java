@@ -43,6 +43,7 @@ public class UserRepository implements UserRepositoryInterface {
             entityManager.getTransaction().commit();
             return result;
         } catch (NoResultException exception){
+            entityManager.getTransaction().rollback();
             return null;
         }
 

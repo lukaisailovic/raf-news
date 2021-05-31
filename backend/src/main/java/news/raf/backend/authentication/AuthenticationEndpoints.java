@@ -32,6 +32,12 @@ public class AuthenticationEndpoints {
         if (potentialUser != null){
             return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("User with that email already exists").build();
         }
-            return Response.ok(potentialUser).build();
+        User user = new User();
+        user.setEmail(signUpRequest.getEmail());
+        user.setFirstName(signUpRequest.getFirstName());
+        user.setLastName(signUpRequest.getLastName());
+        user.setPassword(signUpRequest.getPassword());
+        this.userRepository.save(user);
+        return ApplicationResponseBuilder.status(Response.Status.OK).data(user).build();
     }
 }
