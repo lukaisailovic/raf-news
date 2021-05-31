@@ -8,4 +8,5 @@ public interface UserRepositoryInterface {
      void save(User user);
      List<User> all();
      User find(String id);
+     User findByEmail(String email);
 }

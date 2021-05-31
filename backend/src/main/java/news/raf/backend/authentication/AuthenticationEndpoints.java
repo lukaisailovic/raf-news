@@ -1,9 +1,13 @@
 package news.raf.backend.authentication;
 
 import news.raf.backend.authentication.requests.SignUpRequest;
+import news.raf.backend.core.ApplicationResponseBuilder;
 import news.raf.backend.core.annotations.NotEmptyBody;
+import news.raf.backend.entities.User;
+import news.raf.backend.repositories.interfaces.UserRepositoryInterface;
 
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -15,12 +19,19 @@ import javax.ws.rs.core.Response;
 @Path("/auth")
 public class AuthenticationEndpoints {
 
+    @Inject
+    private UserRepositoryInterface userRepository;
+
     @POST
     @Path("/signup")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @NotEmptyBody
     public Response signup(@Valid SignUpRequest signUpRequest){
-            return Response.ok(signUpRequest).build();
+        User potentialUser = this.userRepository.findByEmail(signUpRequest.getEmail());
+        if (potentialUser != null){
+            return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("User with that email already exists").build();
+        }
+            return Response.ok(potentialUser).build();
     }
 }
