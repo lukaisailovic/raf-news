@@ -1,7 +1,7 @@
 package news.raf.backend.authentication;
 
 import news.raf.backend.authentication.requests.SignUpRequest;
-import news.raf.backend.core.annotations.NotEmptyBodyFilter;
+import news.raf.backend.core.annotations.NotEmptyBody;
 
 
 import javax.validation.Valid;
@@ -19,7 +19,7 @@ public class AuthenticationEndpoints {
     @Path("/signup")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @NotEmptyBodyFilter
+    @NotEmptyBody
     public Response signup(@Valid SignUpRequest signUpRequest){
             return Response.ok(signUpRequest).build();
     }
