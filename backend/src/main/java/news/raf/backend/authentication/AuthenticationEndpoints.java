@@ -5,6 +5,7 @@ import news.raf.backend.core.ApplicationResponseBuilder;
 import news.raf.backend.core.annotations.NotEmptyBody;
 import news.raf.backend.entities.User;
 import news.raf.backend.repositories.interfaces.UserRepositoryInterface;
+import org.mindrot.jbcrypt.BCrypt;
 
 
 import javax.inject.Inject;
@@ -36,7 +37,8 @@ public class AuthenticationEndpoints {
         user.setEmail(signUpRequest.getEmail());
         user.setFirstName(signUpRequest.getFirstName());
         user.setLastName(signUpRequest.getLastName());
-        user.setPassword(signUpRequest.getPassword());
+        String hashedPassword = BCrypt.hashpw(signUpRequest.getPassword(),BCrypt.gensalt());
+        user.setPassword(hashedPassword);
         this.userRepository.save(user);
         return ApplicationResponseBuilder.status(Response.Status.OK).data(user).build();
     }
