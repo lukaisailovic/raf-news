@@ -1,5 +1,7 @@
 package news.raf.backend;
 
+import news.raf.backend.core.ConstraintViolationMapper;
+import news.raf.backend.core.NotEmptyBodyFilter;
 import news.raf.backend.repositories.EntityManagerFactoryProvider;
 import news.raf.backend.repositories.EntityManagerProvider;
 import news.raf.backend.repositories.UserRepository;
@@ -13,7 +15,6 @@ import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
 
 @ApplicationPath("/api")
 public class NewsApplication extends ResourceConfig {
@@ -27,7 +28,8 @@ public class NewsApplication extends ResourceConfig {
             }
         };
         register(binder);
-        register(new ConstraintViolationMapper());
+        register(ConstraintViolationMapper.class);
+        register(NotEmptyBodyFilter.class);
         property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
 
         packages("news.raf.backend.authentication");

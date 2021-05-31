@@ -1,4 +1,4 @@
-package news.raf.backend;
+package news.raf.backend.core;
 
 import javax.inject.Singleton;
 import javax.validation.ConstraintViolation;
