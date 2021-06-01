@@ -1,6 +1,7 @@
 package news.raf.backend.authentication.filters;
 
 import news.raf.backend.authentication.ApplicationSecurityContext;
+import news.raf.backend.authentication.SecurityUser;
 import news.raf.backend.authentication.Token;
 import news.raf.backend.authentication.annotations.Authorized;
 import news.raf.backend.core.ApplicationResponseBuilder;
@@ -21,6 +22,7 @@ import java.io.IOException;
 public class AuthenticationFilter implements ContainerRequestFilter {
     private static final String SCHEME = "Bearer";
 
+
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String authorizationHeader =
@@ -30,11 +32,11 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         }
         try {
             String token = authorizationHeader.substring(SCHEME.length()).trim();
-            String userEmail = Token.validate(token);
-            if (userEmail == null || userEmail.length() == 0){
+            SecurityUser securityUser = Token.validate(token);
+            if (securityUser.getEmail().length() == 0){
                 abort(requestContext);
             }
-            SecurityContext securityContext = new ApplicationSecurityContext(userEmail);
+            SecurityContext securityContext = new ApplicationSecurityContext(securityUser);
             requestContext.setSecurityContext(securityContext);
         }catch (Exception e){
             abort(requestContext);

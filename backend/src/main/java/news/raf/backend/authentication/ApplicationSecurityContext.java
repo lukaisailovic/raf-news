@@ -2,23 +2,28 @@ package news.raf.backend.authentication;
 
 import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
+import java.util.List;
 
 public class ApplicationSecurityContext implements SecurityContext {
 
-    private String userEmail;
+    private final SecurityUser securityUser;
 
-    public ApplicationSecurityContext(String userEmail) {
-        this.userEmail = userEmail;
+    public ApplicationSecurityContext(SecurityUser securityUser) {
+        this.securityUser = securityUser;
+    }
+
+    public SecurityUser getSecurityUser() {
+        return securityUser;
     }
 
     @Override
     public Principal getUserPrincipal() {
-        return () -> userEmail;
+        return securityUser::getEmail;
     }
 
     @Override
     public boolean isUserInRole(String role) {
-        return false;
+        return securityUser.getRole().equals(role);
     }
 
     @Override

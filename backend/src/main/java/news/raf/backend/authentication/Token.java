@@ -16,14 +16,19 @@ public class Token {
     public static String generate(User user){
         return Jwts.builder()
                 .setId(String.valueOf(UUID.randomUUID()))
-                .claim("userid",user.getId())
+                .claim("userId",user.getId())
+                .claim("userType",user.getUserType().toString())
                 .setSubject(user.getEmail())
                 .setIssuedAt(new Date())
                 .setIssuer("Raf News")
                 .signWith(key).compact();
     }
-    public static String validate(String token) throws JwtException {
+    public static SecurityUser validate(String token) throws JwtException {
         Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-        return claims.getSubject();
+        return new SecurityUser(
+                claims.get("userId",String.class),
+                claims.getSubject(),
+                claims.get("userType",String.class)
+        );
     }
 }

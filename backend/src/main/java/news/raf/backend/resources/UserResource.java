@@ -1,5 +1,7 @@
 package news.raf.backend.resources;
 
+import news.raf.backend.authentication.ApplicationSecurityContext;
+import news.raf.backend.authentication.SecurityUser;
 import news.raf.backend.authentication.annotations.Authorized;
 import news.raf.backend.core.ApplicationResponseBuilder;
 import news.raf.backend.entities.User;
@@ -12,6 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
 
 
 @Path("/users")
@@ -38,6 +41,10 @@ public class UserResource extends BasicResource{
     @Authorized
     public Response self(){
         User user = getCurrentlyAuthenticatedUser();
-        return ApplicationResponseBuilder.status(Response.Status.OK).data(user).build();
+        SecurityUser securityUser = ((ApplicationSecurityContext) context.getSecurityContext()).getSecurityUser();
+        HashMap<String ,Object> msg= new HashMap<String,Object>();
+        msg.put("user",user);
+        msg.put("security user",securityUser);
+        return ApplicationResponseBuilder.status(Response.Status.OK).data(msg).build();
     }
 }
