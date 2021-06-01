@@ -35,7 +35,9 @@ abstract class AbstractRepository<T> {
         try {
             TypedQuery<T> query = entityManager.createQuery("Select e FROM "+getType()+" e WHERE e."+parameter+" = :value",typeOfT);
             query.setParameter("value",value);
-            return query.getSingleResult();
+            T result = query.getSingleResult();
+            entityManager.refresh(result);
+            return result;
         } catch (NoResultException exception){
             return null;
         }
