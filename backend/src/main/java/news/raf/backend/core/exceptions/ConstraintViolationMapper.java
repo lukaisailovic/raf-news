@@ -1,4 +1,6 @@
-package news.raf.backend.core;
+package news.raf.backend.core.exceptions;
+
+import news.raf.backend.core.ApplicationResponseBuilder;
 
 import javax.inject.Singleton;
 import javax.validation.ConstraintViolation;

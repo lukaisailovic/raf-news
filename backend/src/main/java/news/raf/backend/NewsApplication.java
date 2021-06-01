@@ -1,8 +1,9 @@
 package news.raf.backend;
 
 import news.raf.backend.authentication.filters.AuthenticationFilter;
-import news.raf.backend.core.ConstraintViolationMapper;
+import news.raf.backend.core.exceptions.ConstraintViolationMapper;
 import news.raf.backend.core.NotEmptyBodyFilter;
+import news.raf.backend.core.exceptions.ForbiddenExceptionMapper;
 import news.raf.backend.repositories.EntityManagerFactoryProvider;
 import news.raf.backend.repositories.EntityManagerProvider;
 import news.raf.backend.repositories.UserRepository;
@@ -31,6 +32,7 @@ public class NewsApplication extends ResourceConfig {
         };
         register(binder);
         register(ConstraintViolationMapper.class);
+        register(ForbiddenExceptionMapper.class);
         register(NotEmptyBodyFilter.class);
         register(AuthenticationFilter.class);
         register(RolesAllowedDynamicFeature.class);
