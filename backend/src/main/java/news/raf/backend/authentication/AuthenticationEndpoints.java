@@ -59,8 +59,9 @@ public class AuthenticationEndpoints {
         if (!BCrypt.checkpw(signInRequest.getPassword(),potentialUser.getPassword())){
             return ApplicationResponseBuilder.status(Response.Status.FORBIDDEN).data("Incorrect password").build();
         }
-        HashMap<String, String> map = new HashMap<>();
+        HashMap<String, Object> map = new HashMap<>();
         map.put("token",Token.generate(potentialUser));
+        map.put("user",potentialUser);
         return ApplicationResponseBuilder.status(Response.Status.OK).data(map).build();
     }
 }
