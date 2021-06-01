@@ -37,13 +37,10 @@ public class UserRepository implements UserRepositoryInterface {
     @Override
     public User findByEmail(String email) {
         try {
-            entityManager.getTransaction().begin();
             User result = (User) entityManager.createQuery("Select user FROM User user WHERE user.email = :email")
                     .setParameter("email",email).getSingleResult();
-            entityManager.getTransaction().commit();
             return result;
         } catch (NoResultException exception){
-            entityManager.getTransaction().rollback();
             return null;
         }
 
