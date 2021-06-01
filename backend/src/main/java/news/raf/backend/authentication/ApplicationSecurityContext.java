@@ -2,7 +2,6 @@ package news.raf.backend.authentication;
 
 import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
-import java.util.List;
 
 public class ApplicationSecurityContext implements SecurityContext {
 

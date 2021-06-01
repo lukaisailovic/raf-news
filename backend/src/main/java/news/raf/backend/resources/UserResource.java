@@ -50,4 +50,13 @@ public class UserResource extends BasicResource{
         msg.put("security user",securityUser);
         return ApplicationResponseBuilder.status(Response.Status.OK).data(msg).build();
     }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/me/asadmin")
+    @Authorized
+    @RolesAllowed({"ADMIN"})
+    public Response adminOnly(){
+        return ApplicationResponseBuilder.status(Response.Status.OK).data("You are an admin").build();
+    }
 }
