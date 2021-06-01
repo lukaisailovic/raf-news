@@ -1,6 +1,7 @@
 package news.raf.backend.core;
 
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
 
 public class ApplicationResponseBuilder {
 
@@ -13,6 +14,11 @@ public class ApplicationResponseBuilder {
             return responseBuilder;
     }
     public ApplicationResponseBuilder data(Object data){
+        if (data instanceof String){
+            HashMap<String,String> newData = new HashMap<>();
+            newData.put("message", (String) data);
+            data = newData;
+        }
         ResponseBody responseBody = new ResponseBody(this.status.getStatusCode(),data);
         this.setResponseBody(responseBody);
         return this;

@@ -1,5 +1,7 @@
 package news.raf.backend.resources;
 
+import news.raf.backend.authentication.annotations.Authorized;
+import news.raf.backend.core.ApplicationResponseBuilder;
 import news.raf.backend.entities.User;
 import news.raf.backend.repositories.interfaces.UserRepositoryInterface;
 
@@ -29,5 +31,13 @@ public class UserResource {
         user.setPassword("pass");
         this.userRepository.save(user);
         return Response.ok("CREATED").build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/me")
+    @Authorized
+    public Response self(){
+        return ApplicationResponseBuilder.status(Response.Status.OK).data("USER OBJECT").build();
     }
 }

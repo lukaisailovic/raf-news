@@ -1,5 +1,6 @@
 package news.raf.backend;
 
+import news.raf.backend.authentication.filters.AuthenticationFilter;
 import news.raf.backend.core.ConstraintViolationMapper;
 import news.raf.backend.core.NotEmptyBodyFilter;
 import news.raf.backend.repositories.EntityManagerFactoryProvider;
@@ -30,6 +31,7 @@ public class NewsApplication extends ResourceConfig {
         register(binder);
         register(ConstraintViolationMapper.class);
         register(NotEmptyBodyFilter.class);
+        register(AuthenticationFilter.class);
         property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
 
         packages("news.raf.backend.authentication");

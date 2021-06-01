@@ -12,4 +12,12 @@ public class Token {
     public static String generate(User user){
         return Jwts.builder().setId(user.getId()).setSubject(user.getEmail()).signWith(key).compact();
     }
+    public static boolean validate(String token){
+        try{
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
 }
