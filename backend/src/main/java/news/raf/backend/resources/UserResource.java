@@ -8,6 +8,7 @@ import news.raf.backend.entities.User;
 import news.raf.backend.repositories.interfaces.UserRepositoryInterface;
 
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -39,6 +40,7 @@ public class UserResource extends BasicResource{
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/me")
     @Authorized
+    @RolesAllowed({"ADMIN","CONTENT_CREATOR"})
     public Response self(){
         User user = getCurrentlyAuthenticatedUser();
         SecurityUser securityUser = ((ApplicationSecurityContext) context.getSecurityContext()).getSecurityUser();
