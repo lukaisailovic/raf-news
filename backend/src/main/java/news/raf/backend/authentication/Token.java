@@ -29,7 +29,7 @@ public class Token {
                 .setSubject(user.getEmail())
                 .setIssuedAt(new Date())
                 .setIssuer("Raf News")
-                .signWith(SignatureAlgorithm.HS256,base64EncodedKey).compact();
+                .signWith(key).compact();
     }
     public static SecurityUser validate(String token) throws JwtException {
         Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
