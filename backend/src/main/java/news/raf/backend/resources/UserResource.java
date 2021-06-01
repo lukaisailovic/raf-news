@@ -10,12 +10,14 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
 @Path("/users")
-public class UserResource {
+public class UserResource extends BasicResource{
 
     @Inject
     private UserRepositoryInterface userRepository;
@@ -37,7 +39,8 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/me")
     @Authorized
-    public Response self(){
-        return ApplicationResponseBuilder.status(Response.Status.OK).data("USER OBJECT").build();
+    public Response self(@Context ContainerRequestContext context){
+        String userEmail = getUserEmail(context);
+        return ApplicationResponseBuilder.status(Response.Status.OK).data("USER OBJECT WITH EMAIL "+ userEmail).build();
     }
 }

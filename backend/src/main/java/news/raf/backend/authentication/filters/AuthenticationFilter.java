@@ -1,5 +1,6 @@
 package news.raf.backend.authentication.filters;
 
+import news.raf.backend.authentication.ApplicationSecurityContext;
 import news.raf.backend.authentication.Token;
 import news.raf.backend.authentication.annotations.Authorized;
 import news.raf.backend.core.ApplicationResponseBuilder;
@@ -10,6 +11,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
 
@@ -28,9 +30,12 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         }
         try {
             String token = authorizationHeader.substring(SCHEME.length()).trim();
-            if (!Token.validate(token)){
+            String userEmail = Token.validate(token);
+            if (userEmail == null || userEmail.length() == 0){
                 abort(requestContext);
             }
+            SecurityContext securityContext = new ApplicationSecurityContext(userEmail);
+            requestContext.setSecurityContext(securityContext);
         }catch (Exception e){
             abort(requestContext);
         }
