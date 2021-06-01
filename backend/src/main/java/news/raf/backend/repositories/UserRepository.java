@@ -7,6 +7,7 @@ import news.raf.backend.repositories.interfaces.UserRepositoryInterface;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 
@@ -35,14 +36,13 @@ public class UserRepository implements UserRepositoryInterface {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public User findBy(String parameter, String value) {
         try {
-            User result = (User) entityManager.createQuery("Select user FROM User user WHERE user.email = :email")
-                    .setParameter("email",email).getSingleResult();
-            return result;
+            TypedQuery<User> query = entityManager.createQuery("Select user FROM User user WHERE user."+parameter+" = :value",User.class);
+            query.setParameter("value",value);
+            return query.getSingleResult();
         } catch (NoResultException exception){
             return null;
         }
-
     }
 }

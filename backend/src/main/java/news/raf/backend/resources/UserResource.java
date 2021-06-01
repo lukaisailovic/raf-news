@@ -42,8 +42,9 @@ public class UserResource extends BasicResource{
     @Authorized
     @RolesAllowed({"ADMIN","CONTENT_CREATOR"})
     public Response self(){
-        User user = getCurrentlyAuthenticatedUser();
+
         SecurityUser securityUser = ((ApplicationSecurityContext) context.getSecurityContext()).getSecurityUser();
+        User user = this.userRepository.findBy("email",securityUser.getEmail());
         HashMap<String ,Object> msg= new HashMap<String,Object>();
         msg.put("user",user);
         msg.put("security user",securityUser);

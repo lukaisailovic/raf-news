@@ -32,7 +32,7 @@ public class AuthenticationEndpoints {
     @Consumes(MediaType.APPLICATION_JSON)
     @NotEmptyBody
     public Response signup(@Valid SignUpRequest signUpRequest){
-        User potentialUser = this.userRepository.findByEmail(signUpRequest.getEmail());
+        User potentialUser = this.userRepository.findBy("email",signUpRequest.getEmail());
         if (potentialUser != null){
             return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("User with that email already exists").build();
         }
@@ -52,7 +52,7 @@ public class AuthenticationEndpoints {
     @Consumes(MediaType.APPLICATION_JSON)
     @NotEmptyBody
     public Response signin(@Valid SignInRequest signInRequest){
-        User potentialUser = this.userRepository.findByEmail(signInRequest.getEmail());
+        User potentialUser = this.userRepository.findBy("email",signInRequest.getEmail());
         if (potentialUser == null){
             return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("User with that email does not exist").build();
         }

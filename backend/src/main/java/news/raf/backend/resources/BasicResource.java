@@ -19,6 +19,6 @@ abstract class BasicResource {
     public User getCurrentlyAuthenticatedUser(){
         ApplicationSecurityContext securityContext = (ApplicationSecurityContext) context.getSecurityContext();
         String userEmail =  securityContext.getUserPrincipal().getName();
-        return this.userRepository.findByEmail(userEmail);
+        return this.userRepository.findBy("email",userEmail);
     }
 }
