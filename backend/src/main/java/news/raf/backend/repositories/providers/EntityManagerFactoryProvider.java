@@ -1,4 +1,4 @@
-package news.raf.backend.repositories;
+package news.raf.backend.repositories.providers;
 
 import org.glassfish.hk2.api.Factory;
 

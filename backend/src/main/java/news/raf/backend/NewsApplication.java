@@ -5,8 +5,10 @@ import news.raf.backend.core.exceptions.ConstraintViolationMapper;
 import news.raf.backend.core.NotEmptyBodyFilter;
 import news.raf.backend.core.exceptions.ForbiddenExceptionMapper;
 import news.raf.backend.repositories.CategoryRepository;
-import news.raf.backend.repositories.EntityManagerFactoryProvider;
-import news.raf.backend.repositories.EntityManagerProvider;
+import news.raf.backend.repositories.PostRepository;
+import news.raf.backend.repositories.interfaces.PostRepositoryInterface;
+import news.raf.backend.repositories.providers.EntityManagerFactoryProvider;
+import news.raf.backend.repositories.providers.EntityManagerProvider;
 import news.raf.backend.repositories.UserRepository;
 import news.raf.backend.repositories.interfaces.CategoryRepositoryInterface;
 import news.raf.backend.repositories.interfaces.UserRepositoryInterface;
@@ -27,18 +29,29 @@ public class NewsApplication extends ResourceConfig {
         AbstractBinder binder = new AbstractBinder() {
             @Override
             protected void configure() {
+
+                /*
+                 *  Repositories
+                 */
                 this.bind(UserRepository.class).to(UserRepositoryInterface.class).in(Singleton.class);
                 this.bind(CategoryRepository.class).to(CategoryRepositoryInterface.class).in(Singleton.class);
-
+                this.bind(PostRepository.class).to(PostRepositoryInterface.class).in(Singleton.class);
+                /*
+                 * Factories
+                 */
                 this.bindFactory(EntityManagerFactoryProvider.class).to(EntityManagerFactory.class).in(Singleton.class);
                 this.bindFactory(EntityManagerProvider.class).proxy(true).proxyForSameScope(false).to(EntityManager.class).in(RequestScoped.class);
             }
         };
         register(binder);
+        /*
+         * Filters and mappers
+         */
         register(ConstraintViolationMapper.class);
         register(ForbiddenExceptionMapper.class);
         register(NotEmptyBodyFilter.class);
         register(AuthenticationFilter.class);
+
         register(RolesAllowedDynamicFeature.class);
         property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
 
