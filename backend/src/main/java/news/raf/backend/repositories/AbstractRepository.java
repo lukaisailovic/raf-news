@@ -84,6 +84,12 @@ abstract class AbstractRepository<T> implements AbstractRepositoryInterface<T> {
         entityManager.getTransaction().commit();
     }
 
+    public void delete(T entity) {
+        entityManager.getTransaction().begin();
+        entityManager.remove(entity);
+        entityManager.getTransaction().commit();
+    }
+
     public int getPageSize() {
         return PAGE_SIZE;
     }

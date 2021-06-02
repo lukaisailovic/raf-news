@@ -4,6 +4,9 @@ package news.raf.backend.entities;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -20,7 +23,19 @@ public class Category {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
+
     public Category() {
+    }
+
+    public List<Post> getPosts() {
+        return Collections.unmodifiableList(posts);
+    }
+
+    public void addPost(Post post){
+        post.setCategory(this);
+        posts.add(post);
     }
 
     public String getId() {

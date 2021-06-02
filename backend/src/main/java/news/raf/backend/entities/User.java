@@ -1,5 +1,6 @@
 package news.raf.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
@@ -36,7 +37,8 @@ public class User {
     @Column(name = "active", nullable = false)
     private boolean active = false;
 
-    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Post> posts;
 
     public User() {

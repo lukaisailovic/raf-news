@@ -9,5 +9,6 @@ public interface AbstractRepositoryInterface<T> {
     T findBy(String parameter, String value);
     boolean existsBy(String parameter, String value);
     void save(T entity);
+    void delete(T entity);
     int getPageSize();
 }

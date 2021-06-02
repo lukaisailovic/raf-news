@@ -1,6 +1,7 @@
 package news.raf.backend.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
@@ -36,6 +37,11 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonIgnore
+    private Category category;
 
     @ManyToMany
     @JoinTable(name = "tags_posts", joinColumns = @JoinColumn(name = "post_id"),inverseJoinColumns = @JoinColumn(name = "tag_id"))
@@ -127,5 +133,13 @@ public class Post {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
