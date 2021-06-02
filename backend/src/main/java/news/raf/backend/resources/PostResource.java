@@ -46,6 +46,19 @@ public class PostResource extends BasicResource{
                 .build();
     }
 
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response single(@PathParam("id") String id){
+        Post post = postRepository.find(id);
+        if (post == null){
+            return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("Post with that ID does not exist").build();
+        }
+        post.setViewCount(post.getViewCount()+1);
+        postRepository.save(post);
+        return ApplicationResponseBuilder.status(Response.Status.OK).data(post).build();
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
