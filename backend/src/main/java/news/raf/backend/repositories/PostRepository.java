@@ -15,4 +15,13 @@ public class PostRepository extends AbstractRepository<Post> implements PostRepo
         query.setMaxResults(PAGE_SIZE);
         return query.getResultList();
     }
+
+    @Override
+    public List<Post> findByCategory(int page, String id) {
+        TypedQuery<Post> query = entityManager.createQuery("select post FROM Post post join post.category category where category.id = :id order by post.created desc",Post.class);
+        query.setParameter("id",id);
+        query.setFirstResult((page-1)*PAGE_SIZE);
+        query.setMaxResults(PAGE_SIZE);
+        return query.getResultList();
+    }
 }

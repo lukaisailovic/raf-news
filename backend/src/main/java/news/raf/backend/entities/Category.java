@@ -1,6 +1,7 @@
 package news.raf.backend.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class Category {
     private String description;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Post> posts = new ArrayList<>();
 
     public Category() {

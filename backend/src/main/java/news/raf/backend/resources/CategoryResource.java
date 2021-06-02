@@ -6,7 +6,9 @@ import news.raf.backend.authentication.annotations.Authorized;
 import news.raf.backend.core.ApplicationResponseBuilder;
 import news.raf.backend.core.annotations.NotEmptyBody;
 import news.raf.backend.entities.Category;
+import news.raf.backend.entities.Post;
 import news.raf.backend.repositories.interfaces.CategoryRepositoryInterface;
+import news.raf.backend.repositories.interfaces.PostRepositoryInterface;
 import news.raf.backend.requests.category.CreateCategoryRequest;
 import news.raf.backend.requests.category.EditCategoryRequest;
 
@@ -22,6 +24,9 @@ public class CategoryResource extends BasicResource{
 
     @Inject
     private CategoryRepositoryInterface categoryRepository;
+
+    @Inject
+    private PostRepositoryInterface postRepository;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -80,7 +85,8 @@ public class CategoryResource extends BasicResource{
         if (category == null){
             return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("Category with that ID does not exist").build();
         }
-        if (category.getPosts().size() > 0){
+        List<Post> postsInCategory = postRepository.findByCategory(1,id);
+        if (postsInCategory.size() > 0){
             return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("Category that has posts cannot be deleted").build();
         }
         categoryRepository.delete(category);
