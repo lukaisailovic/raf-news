@@ -12,6 +12,7 @@ import news.raf.backend.repositories.interfaces.CategoryRepositoryInterface;
 import news.raf.backend.repositories.interfaces.PostRepositoryInterface;
 import news.raf.backend.repositories.interfaces.TagRepositoryInterface;
 import news.raf.backend.requests.post.CreatePostRequest;
+import news.raf.backend.requests.post.EditPostRequest;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -57,23 +58,7 @@ public class PostResource extends BasicResource{
         }
         List<Tag> tagsToAttach = new ArrayList<>();
         if (request.getTags() != null && request.getTags().size() > 0){
-            List<Tag> existingTags = tagRepository.getByNames(request.getTags());
-            for(String providedTagName: request.getTags()){
-                Tag tagToAttach = null;
-                for (Tag existingTag: existingTags){
-                    if (existingTag.getDescription().equals(providedTagName)){
-                        tagToAttach = existingTag;
-                    }
-                }
-                if (tagToAttach != null){
-                    tagsToAttach.add(tagToAttach);
-                    continue;
-                }
-                Tag newTag = new Tag();
-                newTag.setDescription(providedTagName);
-                tagRepository.save(newTag);
-                tagsToAttach.add(newTag);
-            }
+            tagsToAttach = getTagsForPost(request.getTags());
         }
         User user = getCurrentlyAuthenticatedUser();
         Post post = new Post();
@@ -86,5 +71,61 @@ public class PostResource extends BasicResource{
         }
         this.postRepository.save(post);
         return ApplicationResponseBuilder.status(Response.Status.OK).data(post).build();
+    }
+
+    @PATCH
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Authorized
+    @NotEmptyBody
+    public Response edit(@PathParam("id") String id,@Valid EditPostRequest request){
+        Post post = postRepository.find(id);
+        if (post == null){
+            return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("Post with that ID does not exist").build();
+        }
+        post.setTags(new ArrayList<>());
+        postRepository.save(post);
+        Category category = categoryRepository.find(request.getCategoryId());
+        if (category == null){
+            return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("Category with that ID does not exist").build();
+        }
+        List<Tag> tagsToAttach = new ArrayList<>();
+        if (request.getTags() != null && request.getTags().size() > 0){
+            tagsToAttach = getTagsForPost(request.getTags());
+        }
+        User user = getCurrentlyAuthenticatedUser();
+
+        post.setAuthor(user);
+        post.setCategory(category);
+        post.setTitle(request.getTitle());
+        post.setText(request.getText());
+        for (Tag tag : tagsToAttach){
+            post.addTag(tag);
+        }
+        this.postRepository.save(post);
+        return ApplicationResponseBuilder.status(Response.Status.OK).data(post).build();
+    }
+
+    protected List<Tag> getTagsForPost(List<String> tagNames){
+        List<Tag> tagsToAttach = new ArrayList<>();
+        List<Tag> existingTags = tagRepository.getByNames(tagNames);
+        for(String providedTagName: tagNames){
+            Tag tagToAttach = null;
+            for (Tag existingTag: existingTags){
+                if (existingTag.getDescription().equals(providedTagName)){
+                    tagToAttach = existingTag;
+                }
+            }
+            if (tagToAttach != null){
+                tagsToAttach.add(tagToAttach);
+                continue;
+            }
+            Tag newTag = new Tag();
+            newTag.setDescription(providedTagName);
+            tagRepository.save(newTag);
+            tagsToAttach.add(newTag);
+        }
+        return tagsToAttach;
     }
 }

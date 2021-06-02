@@ -144,4 +144,8 @@ public class Post {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
 }
