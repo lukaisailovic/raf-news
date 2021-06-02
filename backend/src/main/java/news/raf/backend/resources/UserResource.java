@@ -27,8 +27,6 @@ import java.util.List;
 @Path("/users")
 public class UserResource extends BasicResource{
 
-    @Inject
-    private UserRepositoryInterface userRepository;
 
     @GET
     @Authorized

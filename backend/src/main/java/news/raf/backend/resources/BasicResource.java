@@ -14,7 +14,7 @@ abstract class BasicResource {
     ContainerRequestContext context;
 
     @Inject
-    private UserRepositoryInterface userRepository;
+    protected UserRepositoryInterface userRepository;
 
     public User getCurrentlyAuthenticatedUser(){
         ApplicationSecurityContext securityContext = (ApplicationSecurityContext) context.getSecurityContext();
