@@ -1,12 +1,11 @@
 package news.raf.backend.core;
 
+import java.util.HashMap;
+
 public class ResponseBody {
     int statusCode;
     Object data;
-    Integer count = null;
-    Integer recordsPerPage = null;
-    Integer currentPage = null;
-    Integer pageNumber = null;
+    HashMap<String, Integer> pagination = new HashMap<>();
 
     public ResponseBody(int statusCode, Object data) {
         this.statusCode = statusCode;
@@ -14,35 +13,42 @@ public class ResponseBody {
     }
 
     public Integer getCount() {
-        return count;
+        return this.pagination.get("count");
     }
 
     public Integer getCurrentPage() {
-        return currentPage;
+        return this.pagination.get("currentPage");
     }
 
     public Integer getPageNumber() {
-        return pageNumber;
+        return this.pagination.get("pageNumber");
     }
 
     public void setPageNumber(Integer pageNumber) {
-        this.pageNumber = pageNumber;
+        this.pagination.put("pageNumber",pageNumber);
     }
 
     public void setCurrentPage(Integer currentPage) {
-        this.currentPage = currentPage;
+        this.pagination.put("currentPage",currentPage);
     }
 
     public void setCount(Integer count) {
-        this.count = count;
+        this.pagination.put("count",count);
     }
 
     public Integer getRecordsPerPage() {
-        return recordsPerPage;
+        return this.pagination.get("recordsPerPage");
     }
 
     public void setRecordsPerPage(Integer recordsPerPage) {
-        this.recordsPerPage = recordsPerPage;
+        this.pagination.put("recordsPerPage",recordsPerPage);
+    }
+
+    public HashMap<String, Integer> getPagination() {
+        if (pagination.isEmpty()){
+            return null;
+        }
+        return pagination;
     }
 
     public int getStatusCode() {

@@ -34,7 +34,12 @@ public class ApplicationResponseBuilder {
         return this;
     }
     public Response build(){
-        return Response.status(this.getStatus()).entity(this.getResponseBody()).build();
+        Object object = new Object(){
+            public final int status = getResponseBody().getStatusCode();
+            public final Object data = getResponseBody().getData();
+            public final Object pagination = getResponseBody().getPagination();
+        };
+        return Response.status(this.getStatus()).entity(object).build();
     }
 
     public Response.Status getStatus() {
