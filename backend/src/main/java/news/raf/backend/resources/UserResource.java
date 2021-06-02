@@ -10,12 +10,11 @@ import news.raf.backend.repositories.interfaces.UserRepositoryInterface;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
+import java.util.List;
 
 
 @Path("/users")
@@ -25,15 +24,17 @@ public class UserResource extends BasicResource{
     private UserRepositoryInterface userRepository;
 
     @GET
+    @Authorized
+    @RolesAllowed({"ADMIN"})
     @Produces(MediaType.APPLICATION_JSON)
-    public Response all(){
-        User user = new User();
-        user.setFirstName("Test");
-        user.setLastName("Test");
-        user.setEmail("neki@email.com"+System.currentTimeMillis());
-        user.setPassword("pass");
-        this.userRepository.save(user);
-        return Response.ok("CREATED").build();
+    public Response all(@DefaultValue("1") @QueryParam("page") int page){
+        List<User> users = userRepository.all(page);
+        int count = (int) userRepository.count();
+        return ApplicationResponseBuilder
+                .status(Response.Status.OK)
+                .data(users)
+                .paginated(count,userRepository.getPageSize(),page)
+                .build();
     }
 
     @GET

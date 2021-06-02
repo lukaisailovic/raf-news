@@ -8,11 +8,21 @@ public class ApplicationResponseBuilder {
     private Response.Status status;
     private ResponseBody responseBody;
 
+
     public static ApplicationResponseBuilder status(Response.Status status){
             ApplicationResponseBuilder responseBuilder = new ApplicationResponseBuilder();
             responseBuilder.setStatus(status);
             return responseBuilder;
     }
+
+    public ApplicationResponseBuilder paginated(int count, int perPage, int currentPage){
+        this.getResponseBody().setCount(count);
+        this.getResponseBody().setRecordsPerPage(perPage);
+        this.getResponseBody().setCurrentPage(currentPage);
+        this.getResponseBody().setPageNumber((int) ((count / perPage) + 1));
+        return this;
+    }
+
     public ApplicationResponseBuilder data(Object data){
         if (data instanceof String){
             HashMap<String,String> newData = new HashMap<>();

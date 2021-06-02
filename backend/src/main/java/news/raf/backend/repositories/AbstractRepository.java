@@ -1,19 +1,41 @@
 package news.raf.backend.repositories;
 
 import news.raf.backend.entities.User;
+import news.raf.backend.repositories.interfaces.AbstractRepositoryInterface;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
-abstract class AbstractRepository<T> {
+abstract class AbstractRepository<T> implements AbstractRepositoryInterface<T> {
+
+
+    public static final int PAGE_SIZE = 10;
 
     @Inject
     EntityManager entityManager;
 
     private Class<T> typeOfT;
+
+    public List<T> all(int page) {
+        TypedQuery<T> query = entityManager.createQuery("select e FROM "+getType()+" e",typeOfT);
+        query.setFirstResult((page-1)*PAGE_SIZE);
+        query.setMaxResults(PAGE_SIZE);
+        return query.getResultList();
+    }
+
+    public long count(){
+        try {
+            Query query = entityManager.createQuery("select count(e.id) FROM "+getType()+" e");
+            return (long) query.getSingleResult();
+        }catch (NoResultException e){
+            return 0;
+        }
+    }
 
     @SuppressWarnings("unchecked")
     public String getType() {
@@ -49,5 +71,7 @@ abstract class AbstractRepository<T> {
         entityManager.getTransaction().commit();
     }
 
-
+    public int getPageSize() {
+        return PAGE_SIZE;
+    }
 }
