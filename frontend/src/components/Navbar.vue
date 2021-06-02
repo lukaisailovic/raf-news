@@ -10,7 +10,7 @@
                     <b-navbar-nav>
                         <b-nav-item to="/">Home</b-nav-item>
                         <b-nav-item :to="{name: 'Popular'}">Popular</b-nav-item>
-                        <b-nav-item to="/">Categories</b-nav-item>
+                        <b-nav-item :to="{name: 'Categories'}">Categories</b-nav-item>
                     </b-navbar-nav>
 
                     <b-navbar-nav class="ml-auto">
@@ -19,7 +19,7 @@
                             <template #button-content>
                                 <em>{{getUser.email}}</em>
                             </template>
-                            <b-dropdown-item href="#" @click.prevent="logOut">Sign Out</b-dropdown-item>
+                            <b-dropdown-item href="#" @click.prevent="logout">Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
                         <b-nav-item :to="{name:'Login'}" v-if="!isLoggedIn">Login</b-nav-item>
                         <b-nav-item :to="{name:'Register'}" v-if="!isLoggedIn">Register</b-nav-item>
@@ -49,7 +49,11 @@ export default {
         ...mapGetters(['isLoggedIn','getUser'])
     },
     methods:{
-        ...mapActions(['logOut'])
+        ...mapActions(['logOut']),
+        logout(){
+            this.logOut();
+            window.location.replace('/');
+        }
     }
 }
 </script>

@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Popular from '../views/Popular.vue'
+import Categories from '../views/Categories.vue'
 
 Vue.use(VueRouter)
 
@@ -14,9 +15,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/',
+    path: '/popular',
     name: 'Popular',
     component: Popular
+  },
+  {
+    path: '/categories',
+    name: 'Categories',
+    component: Categories
   },
   {
     path: '/login',
