@@ -9,6 +9,7 @@ import news.raf.backend.entities.User;
 import news.raf.backend.entities.UserType;
 import news.raf.backend.repositories.interfaces.UserRepositoryInterface;
 import news.raf.backend.requests.user.EditUserRequest;
+import news.raf.backend.requests.user.ToggleUserActiveRequest;
 
 
 import javax.annotation.security.RolesAllowed;
@@ -51,7 +52,10 @@ public class UserResource extends BasicResource{
     @NotEmptyBody
     public Response edit(@PathParam("id") String id, @Valid EditUserRequest request){
         User user = userRepository.find(id);
-        if (userRepository.existsBy("email",request.getEmail())){
+        if (user == null){
+            return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("User with that email does not exist").build();
+        }
+        if (!user.getEmail().equals(request.getEmail()) && userRepository.existsBy("email",request.getEmail())){
             return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("User with that email already exists").build();
         }
         UserType userType;
@@ -64,6 +68,26 @@ public class UserResource extends BasicResource{
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setUserType(userType);
+        userRepository.save(user);
+        return ApplicationResponseBuilder.status(Response.Status.OK).data(user).build();
+    }
+
+    @PATCH
+    @Path("{id}/toggle/active")
+    @Authorized
+    @RolesAllowed({"ADMIN"})
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @NotEmptyBody
+    public Response toggleActive(@PathParam("id") String id, @Valid ToggleUserActiveRequest request){
+        User user = userRepository.find(id);
+        if (user == null){
+            return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("User with that email does not exist").build();
+        }
+        if (user.getUserType().equals(UserType.ADMIN)){
+            return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("Admin account cannot be deactivated").build();
+        }
+        user.setActive(request.isActive());
         userRepository.save(user);
         return ApplicationResponseBuilder.status(Response.Status.OK).data(user).build();
     }
