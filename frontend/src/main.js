@@ -6,6 +6,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
+
+
 Vue.config.productionTip = false
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -15,6 +17,11 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueAxios, axios)
 
+const baseURL = process.env.VUE_APP_BASE_URL;
+if (typeof baseURL !== 'undefined')
+{
+  Vue.axios.defaults.baseURL = baseURL;
+}
 new Vue({
   router,
   store,

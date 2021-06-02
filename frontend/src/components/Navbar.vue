@@ -14,26 +14,42 @@
                     </b-navbar-nav>
 
                     <b-navbar-nav class="ml-auto">
-                        <b-nav-item-dropdown right>
+
+                        <b-nav-item-dropdown right v-if="isLoggedIn">
                             <template #button-content>
-                                <em>User</em>
+                                <em>{{getUser.email}}</em>
                             </template>
-                            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                            <b-dropdown-item href="#" @click.prevent="logOut">Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
+                        <b-nav-item :to="{name:'Login'}" v-if="!isLoggedIn">Login</b-nav-item>
+                        <b-nav-item to="/" v-if="!isLoggedIn">Register</b-nav-item>
                     </b-navbar-nav>
+
+
                 </b-collapse>
             </b-container>
         </b-navbar>
+
+
+
     </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
     name: "Navbar",
+    async mounted(){
+        await this.$store.dispatch('fetchUser');
+    },
     computed: {
         appName() {
             return process.env.VUE_APP_NAME;
-        }
+        },
+        ...mapGetters(['isLoggedIn','getUser'])
+    },
+    methods:{
+        ...mapActions(['logOut'])
     }
 }
 </script>
