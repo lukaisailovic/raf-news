@@ -1,10 +1,11 @@
 package news.raf.backend.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "comments")
@@ -15,17 +16,19 @@ public class Comment {
     @GeneratedValue(generator="COMMENT_ID_GEN")
     private String id;
 
-    @Column(name = "author", unique = true, nullable = false, length = 150)
+    @Column(name = "author", nullable = false, length = 150)
     private String author;
 
     @Column(name = "text", nullable = false, length = 512)
     private String text;
 
-    @Column(name = "created_at", nullable = false,updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", nullable = false,updatable = false,columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date created;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
+    @JsonIgnore
     private Post post;
 
     @PrePersist
