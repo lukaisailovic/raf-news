@@ -1,6 +1,7 @@
 package news.raf.backend;
 
 import news.raf.backend.authentication.filters.AuthenticationFilter;
+import news.raf.backend.core.CORSFilter;
 import news.raf.backend.core.exceptions.ConstraintViolationMapper;
 import news.raf.backend.core.NotEmptyBodyFilter;
 import news.raf.backend.core.exceptions.ForbiddenExceptionMapper;
@@ -44,6 +45,7 @@ public class NewsApplication extends ResourceConfig {
         /*
          * Filters and mappers
          */
+        register(CORSFilter.class);
         register(ConstraintViolationMapper.class);
         register(ForbiddenExceptionMapper.class);
         register(NotEmptyBodyFilter.class);
