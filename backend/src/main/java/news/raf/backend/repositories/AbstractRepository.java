@@ -1,6 +1,5 @@
 package news.raf.backend.repositories;
 
-import news.raf.backend.entities.User;
 import news.raf.backend.repositories.interfaces.AbstractRepositoryInterface;
 
 import javax.inject.Inject;
@@ -47,10 +46,15 @@ abstract class AbstractRepository<T> implements AbstractRepositoryInterface<T> {
     }
 
     public T find(String id) {
-        entityManager.getTransaction().begin();
-        T result = entityManager.find(typeOfT,id);
-        entityManager.getTransaction().commit();
-        return result;
+        try {
+            TypedQuery<T> query = entityManager.createQuery("Select e FROM "+getType()+" e WHERE e.id = :value",typeOfT);
+            query.setParameter("value",id);
+            T result = query.getSingleResult();
+            entityManager.refresh(result);
+            return result;
+        } catch (NoResultException exception){
+            return null;
+        }
     }
 
     public T findBy(String parameter, String value) {
@@ -62,6 +66,15 @@ abstract class AbstractRepository<T> implements AbstractRepositoryInterface<T> {
             return result;
         } catch (NoResultException exception){
             return null;
+        }
+    }
+    public boolean existsBy(String parameter, String value){
+        try {
+            Query query = entityManager.createQuery("Select count(e.id) FROM "+getType()+" e WHERE e."+parameter+" = :value");
+            query.setParameter("value",value);
+            return (long)query.getSingleResult() > 0;
+        } catch (NoResultException exception){
+            return false;
         }
     }
 

@@ -7,6 +7,7 @@ public interface AbstractRepositoryInterface<T> {
     long count();
     T find(String id);
     T findBy(String parameter, String value);
+    boolean existsBy(String parameter, String value);
     void save(T entity);
     int getPageSize();
 }
