@@ -2,7 +2,7 @@
     <div>
         <b-navbar toggleable="lg" type="dark" variant="dark">
             <b-container>
-                <b-navbar-brand href="#">{{ appName }}</b-navbar-brand>
+                <b-navbar-brand to="/">{{ appName }}</b-navbar-brand>
 
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -22,7 +22,7 @@
                             <b-dropdown-item href="#" @click.prevent="logOut">Sign Out</b-dropdown-item>
                         </b-nav-item-dropdown>
                         <b-nav-item :to="{name:'Login'}" v-if="!isLoggedIn">Login</b-nav-item>
-                        <b-nav-item to="/" v-if="!isLoggedIn">Register</b-nav-item>
+                        <b-nav-item :to="{name:'Register'}" v-if="!isLoggedIn">Register</b-nav-item>
                     </b-navbar-nav>
 
 

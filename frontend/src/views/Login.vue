@@ -67,7 +67,7 @@ export default {
                 const response = await axios.post('/auth/signin',this.form);
                 if (response.status === 200){
                     localStorage.setItem('token',response.data.data.token);
-                    await this.$store.dispatch('auth/fetchUser');
+                    await this.$store.dispatch('fetchUser');
                     await this.$router.push('/');
                 } else {
 
@@ -81,7 +81,15 @@ export default {
                 }
                 console.log(response)
             } catch (error){
-                this.$bvToast.toast(error.response.data.data.message, {
+                const data = error.response.data.data;
+                let message = "Invalid data";
+                if (data[0] !== undefined){
+                    message = data[0];
+                }
+                if (data.message !== undefined){
+                    message = data.message;
+                }
+                this.$bvToast.toast(message, {
                     title: 'Login error',
                     variant: 'danger',
                     solid: true,
