@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <PostList :posts="posts" title="All posts"/>
+        <PostList :posts="posts" title="Most popular posts"/>
     </div>
 </template>
 
@@ -9,7 +9,7 @@ import axios from "@/plugins/axios";
 import PostList from "@/components/PostList";
 
 export default {
-    name: 'Home',
+    name: 'Popular',
     components: {
         PostList
 
@@ -21,7 +21,7 @@ export default {
     },
     async mounted() {
         try {
-            const res = await axios.get('/posts');
+            const res = await axios.get('/posts/popular');
             this.posts = res.data.data;
         } catch (error){
             this.$bvToast.toast("Could not load posts", {

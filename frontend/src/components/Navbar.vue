@@ -9,7 +9,7 @@
                 <b-collapse id="nav-collapse" is-nav>
                     <b-navbar-nav>
                         <b-nav-item to="/">Home</b-nav-item>
-                        <b-nav-item to="/">Popular</b-nav-item>
+                        <b-nav-item :to="{name: 'Popular'}">Popular</b-nav-item>
                         <b-nav-item to="/">Categories</b-nav-item>
                     </b-navbar-nav>
 
