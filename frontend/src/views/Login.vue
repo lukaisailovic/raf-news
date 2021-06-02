@@ -71,7 +71,7 @@ export default {
                     await this.$router.push('/');
                 } else {
 
-                    this.$bvToast.toast(response.data.message, {
+                    this.$bvToast.toast(response.data.data.message, {
                         title: 'Login error',
                         variant: 'danger',
                         solid: true,
