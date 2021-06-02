@@ -1,5 +1,6 @@
 package news.raf.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
 import javax.persistence.*;
@@ -14,10 +15,11 @@ public class Tag {
     @GeneratedValue(generator="TAG_ID_GEN")
     private String id;
 
-    @Column(name = "description",nullable = false, unique = true)
+    @Column(name = "description",nullable = false)
     private String description;
 
     @ManyToMany(mappedBy = "tags")
+    @JsonIgnore
     private List<Post> posts;
 
     public Tag() {
@@ -45,5 +47,14 @@ public class Tag {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "id='" + id + '\'' +
+                ", description='" + description + '\'' +
+                ", posts=" + posts +
+                '}';
     }
 }

@@ -19,7 +19,7 @@ public class Post {
     @GeneratedValue(generator="POST_ID_GEN")
     private String id;
 
-    @Column(name = "title", unique = true, nullable = false, length = 150)
+    @Column(name = "title", nullable = false, length = 150)
     private String title;
 
     @Column(name = "text", nullable = false, length = 1024)

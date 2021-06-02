@@ -6,7 +6,9 @@ import news.raf.backend.core.NotEmptyBodyFilter;
 import news.raf.backend.core.exceptions.ForbiddenExceptionMapper;
 import news.raf.backend.repositories.CategoryRepository;
 import news.raf.backend.repositories.PostRepository;
+import news.raf.backend.repositories.TagRepository;
 import news.raf.backend.repositories.interfaces.PostRepositoryInterface;
+import news.raf.backend.repositories.interfaces.TagRepositoryInterface;
 import news.raf.backend.repositories.providers.EntityManagerFactoryProvider;
 import news.raf.backend.repositories.providers.EntityManagerProvider;
 import news.raf.backend.repositories.UserRepository;
@@ -36,6 +38,7 @@ public class NewsApplication extends ResourceConfig {
                 this.bind(UserRepository.class).to(UserRepositoryInterface.class).in(Singleton.class);
                 this.bind(CategoryRepository.class).to(CategoryRepositoryInterface.class).in(Singleton.class);
                 this.bind(PostRepository.class).to(PostRepositoryInterface.class).in(Singleton.class);
+                this.bind(TagRepository.class).to(TagRepositoryInterface.class).in(Singleton.class);
                 /*
                  * Factories
                  */
