@@ -14,7 +14,8 @@
                     :busy.sync="isBusy"
                     :items="categoryProvider"
                     :fields="fields"
-                    :per-page="10"
+                    :current-page="currentPage"
+                    :per-page="perPage"
                 >
                     <template #cell(name)="data">
                         <a href="">{{data.item.name}}</a>
@@ -24,6 +25,12 @@
                         <a href="" class="btn btn-danger ml-2">Delete</a>
                     </template>
                 </b-table>
+                <b-pagination
+                    v-model="currentPage"
+                    :total-rows="totalRows"
+                    :per-page="perPage"
+                    aria-controls="my-table"
+                ></b-pagination>
             </b-col>
         </b-row>
     </div>
@@ -45,7 +52,10 @@ export default {
                 { key: 'description', sortable: false },
 
             ],
-            categories: []
+            categories: [],
+            perPage: 10,
+            currentPage: 1,
+            totalRows: 0,
         }
     },
     getters: {
@@ -63,6 +73,7 @@ export default {
             try {
                 const res = await axios.get(`/categories?page=${ctx.currentPage}`);
                 const categories = res.data.data;
+                this.totalRows = res.data.pagination.count;
                 this.categories = categories;
                 this.isBusy = false;
                 return categories;
