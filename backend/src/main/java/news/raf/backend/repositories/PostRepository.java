@@ -24,4 +24,11 @@ public class PostRepository extends AbstractRepository<Post> implements PostRepo
         query.setMaxResults(PAGE_SIZE);
         return query.getResultList();
     }
+
+    @Override
+    public List<Post> mostPopular() {
+        TypedQuery<Post> query = entityManager.createQuery("select post FROM Post post order by post.viewCount desc",Post.class);
+        query.setMaxResults(PAGE_SIZE);
+        return query.getResultList();
+    }
 }

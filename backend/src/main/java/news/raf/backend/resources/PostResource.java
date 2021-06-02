@@ -46,6 +46,14 @@ public class PostResource extends BasicResource{
     }
 
     @GET
+    @Path("/popular")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response mostPopular(){
+        List<Post> posts = postRepository.mostPopular();
+        return ApplicationResponseBuilder.status(Response.Status.OK).data(posts).build();
+    }
+
+    @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response single(@PathParam("id") String id){
