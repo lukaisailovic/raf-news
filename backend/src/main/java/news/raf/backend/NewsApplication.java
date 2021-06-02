@@ -4,9 +4,11 @@ import news.raf.backend.authentication.filters.AuthenticationFilter;
 import news.raf.backend.core.exceptions.ConstraintViolationMapper;
 import news.raf.backend.core.NotEmptyBodyFilter;
 import news.raf.backend.core.exceptions.ForbiddenExceptionMapper;
+import news.raf.backend.repositories.CategoryRepository;
 import news.raf.backend.repositories.EntityManagerFactoryProvider;
 import news.raf.backend.repositories.EntityManagerProvider;
 import news.raf.backend.repositories.UserRepository;
+import news.raf.backend.repositories.interfaces.CategoryRepositoryInterface;
 import news.raf.backend.repositories.interfaces.UserRepositoryInterface;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.process.internal.RequestScoped;
@@ -26,6 +28,8 @@ public class NewsApplication extends ResourceConfig {
             @Override
             protected void configure() {
                 this.bind(UserRepository.class).to(UserRepositoryInterface.class).in(Singleton.class);
+                this.bind(CategoryRepository.class).to(CategoryRepositoryInterface.class).in(Singleton.class);
+
                 this.bindFactory(EntityManagerFactoryProvider.class).to(EntityManagerFactory.class).in(Singleton.class);
                 this.bindFactory(EntityManagerProvider.class).proxy(true).proxyForSameScope(false).to(EntityManager.class).in(RequestScoped.class);
             }

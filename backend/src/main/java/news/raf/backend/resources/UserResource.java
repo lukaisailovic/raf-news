@@ -7,7 +7,6 @@ import news.raf.backend.core.ApplicationResponseBuilder;
 import news.raf.backend.core.annotations.NotEmptyBody;
 import news.raf.backend.entities.User;
 import news.raf.backend.entities.UserType;
-import news.raf.backend.repositories.interfaces.UserRepositoryInterface;
 import news.raf.backend.requests.user.CreateUserRequest;
 import news.raf.backend.requests.user.EditUserRequest;
 import news.raf.backend.requests.user.ToggleUserActiveRequest;
@@ -15,7 +14,6 @@ import org.mindrot.jbcrypt.BCrypt;
 
 
 import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
