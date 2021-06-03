@@ -9,6 +9,7 @@ import CreateCategory from '../views/category/CreateCategory.vue'
 import EditCategory from '../views/category/EditCategory.vue'
 import Posts from '../views/post/Posts'
 import CreatePost from '../views/post/CreatePost'
+import EditPost from '../views/post/EditPost'
 
 Vue.use(VueRouter)
 
@@ -42,6 +43,11 @@ const routes = [
     path: '/content-creator/posts/create',
     name: 'CreatePost',
     component: CreatePost
+  },
+  {
+    path: '/content-creator/posts/edit/:id',
+    name: 'EditPost',
+    component: EditPost
   },
   {
     path: '/content-creator/posts',

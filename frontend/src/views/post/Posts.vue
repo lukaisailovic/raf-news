@@ -32,7 +32,7 @@
                         <router-link :to="{name: 'EditCategory', params: {id:data.item.category.id}}">{{ data.item.category.name }}</router-link>
                     </template>
                     <template #cell(action)="data">
-                        <b-button variant="warning" pill :to="{name: 'EditCategory', params: {id:data.item.id}}"><b-icon icon="pencil"></b-icon></b-button>
+                        <b-button variant="warning" pill :to="{name: 'EditPost', params: {id:data.item.id}}"><b-icon icon="pencil"></b-icon></b-button>
                         <b-button variant="danger" class="ml-2" pill @click.prevent="onDelete(data.item.id)"><b-icon icon="trash"></b-icon></b-button>
                     </template>
                 </b-table>
