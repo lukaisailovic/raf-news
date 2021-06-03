@@ -56,6 +56,9 @@ public class AuthenticationEndpoints {
         if (potentialUser == null){
             return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("User with that email does not exist").build();
         }
+        if (!potentialUser.isActive()){
+            return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("Account is not active").build();
+        }
         if (!BCrypt.checkpw(signInRequest.getPassword(),potentialUser.getPassword())){
             return ApplicationResponseBuilder.status(Response.Status.FORBIDDEN).data("Incorrect password").build();
         }
