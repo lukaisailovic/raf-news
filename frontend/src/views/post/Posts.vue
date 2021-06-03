@@ -9,7 +9,7 @@
         </b-row>
         <b-row v-if="isLoggedIn" class="my-3">
             <b-col>
-                <b-button variant="outline-primary" pill :to="{name:'CreateCategory'}"><b-icon icon="plus-circle"></b-icon> Create new post </b-button>
+                <b-button variant="outline-primary" pill :to="{name:'CreatePost'}"><b-icon icon="plus-circle"></b-icon> Create new post </b-button>
             </b-col>
         </b-row>
         <b-row>
