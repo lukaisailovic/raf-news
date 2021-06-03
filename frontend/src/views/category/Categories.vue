@@ -9,7 +9,7 @@
         </b-row>
         <b-row v-if="isLoggedIn" class="my-3">
             <b-col>
-                <b-button variant="outline-primary" pill :to="{name:'CreateCategory'}">Create new category</b-button>
+                <b-button variant="outline-primary" pill :to="{name:'CreateCategory'}"><b-icon icon="plus-circle"></b-icon> Create new category </b-button>
             </b-col>
         </b-row>
         <b-row>
@@ -26,8 +26,8 @@
                         <a href="">{{ data.item.name }}</a>
                     </template>
                     <template #cell(action)="data">
-                        <b-button variant="warning" pill :to="{name: 'EditCategory', params: {id:data.item.id}}">Edit</b-button>
-                        <b-button variant="danger" class="ml-2" pill @click.prevent="onDelete(data.item.id)">Delete</b-button>
+                        <b-button variant="warning" pill :to="{name: 'EditCategory', params: {id:data.item.id}}"><b-icon icon="pencil"></b-icon></b-button>
+                        <b-button variant="danger" class="ml-2" pill @click.prevent="onDelete(data.item.id)"><b-icon icon="trash"></b-icon></b-button>
 
                     </template>
                 </b-table>
