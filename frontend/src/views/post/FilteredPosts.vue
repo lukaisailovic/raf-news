@@ -9,7 +9,8 @@
         </b-row>
         <b-row>
             <b-col>
-                <PostList :posts="posts" title="Posts"  />
+                <PostList :posts="posts" title="Posts" v-if="parameter==='category'" />
+                <PostList :posts="posts" title="Posts" v-else display-category="true" />
             </b-col>
         </b-row>
         <b-row class="mt-3">
