@@ -5,6 +5,8 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Popular from '../views/Popular.vue'
 import Categories from '../views/Categories.vue'
+import CreateCategory from '../views/CreateCategory.vue'
+
 
 Vue.use(VueRouter)
 
@@ -23,6 +25,11 @@ const routes = [
     path: '/categories',
     name: 'Categories',
     component: Categories
+  },
+  {
+    path: '/create-category',
+    name: 'CreateCategory',
+    component: CreateCategory
   },
   {
     path: '/login',

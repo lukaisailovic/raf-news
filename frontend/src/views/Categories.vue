@@ -7,6 +7,11 @@
                 </h2>
             </b-col>
         </b-row>
+        <b-row v-if="isLoggedIn" class="my-3">
+            <b-col>
+                <b-button variant="outline-primary" pill :to="{name:'CreateCategory'}">Create new category</b-button>
+            </b-col>
+        </b-row>
         <b-row>
             <b-col>
                 <b-table
@@ -18,11 +23,12 @@
                     :per-page="perPage"
                 >
                     <template #cell(name)="data">
-                        <a href="">{{data.item.name}}</a>
+                        <a href="">{{ data.item.name }}</a>
                     </template>
                     <template #cell(action)="data">
-                        <a href="" class="btn btn-warning">Edit</a>
-                        <a href="" class="btn btn-danger ml-2">Delete</a>
+                        <b-button variant="warning" pill>Edit</b-button>
+                        <b-button variant="danger" class="ml-2" pill>Delete</b-button>
+
                     </template>
                 </b-table>
                 <b-pagination
@@ -38,18 +44,17 @@
 
 <script>
 import axios from "@/plugins/axios";
-import PostList from "@/components/PostList";
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
+
 export default {
     name: 'Categories',
-    components: {
-    },
-    data(){
+    components: {},
+    data() {
         return {
             isBusy: false,
             fields: [
-                { key: 'name', sortable: false },
-                { key: 'description', sortable: false },
+                {key: 'name', sortable: false},
+                {key: 'description', sortable: false},
 
             ],
             categories: [],
@@ -58,16 +63,16 @@ export default {
             totalRows: 0,
         }
     },
-    getters: {
+    computed: {
         ...mapGetters(['isLoggedIn'])
     },
     mounted() {
-        if (localStorage.getItem('token') !== null){
-            this.fields.push({ key: 'action', sortable: false})
+        if (localStorage.getItem('token') !== null) {
+            this.fields.push({key: 'action', sortable: false})
         }
     },
-    methods:{
-        async categoryProvider(ctx){
+    methods: {
+        async categoryProvider(ctx) {
             let items = []
             this.isBusy = true;
             try {

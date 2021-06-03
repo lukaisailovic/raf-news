@@ -19,6 +19,9 @@ export default new Vuex.Store({
         },
         isLoading: state => {
             return state.loading === true;
+        },
+        getToken: state => {
+            return state.token;
         }
     },
     mutations: {
