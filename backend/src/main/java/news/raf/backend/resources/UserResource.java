@@ -82,7 +82,7 @@ public class UserResource extends BasicResource{
         if (user == null){
             return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("User with that email does not exist").build();
         }
-        if (user.getUserType().equals(UserType.ADMIN)){
+        if (user.getUserType().equals(UserType.ADMIN) && user.isActive()){
             return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("Admin account cannot be deactivated").build();
         }
         user.setActive(request.isActive());

@@ -12,6 +12,7 @@ import CreatePost from '../views/post/CreatePost'
 import EditPost from '../views/post/EditPost'
 import Post from '../views/post/Post'
 import FilteredPosts from '../views/post/FilteredPosts'
+import Users from '../views/user/Users'
 
 Vue.use(VueRouter)
 
@@ -95,6 +96,14 @@ const routes = [
         component: Register,
         meta: {
             guest: true
+        }
+    },
+    {
+        path: '/users',
+        name: 'Users',
+        component: Users,
+        meta: {
+            admin: true
         }
     },
 ]

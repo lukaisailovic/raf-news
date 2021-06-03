@@ -12,7 +12,7 @@
                         <b-nav-item :to="{name: 'Popular'}">Popular</b-nav-item>
                         <b-nav-item :to="{name: 'Categories'}"><span class="text-info" v-if="isLoggedIn">Categories</span><span v-else>Categories</span></b-nav-item>
                         <b-nav-item :to="{name: 'ContentCreatorPosts'}" v-if="isLoggedIn"><span class="text-info">Posts</span></b-nav-item>
-                        <b-nav-item :to="{name: 'ContentCreatorPosts'}" v-if="isLoggedIn && isAdmin"><span class="text-warning">Admin</span></b-nav-item>
+                        <b-nav-item :to="{name: 'Users'}" v-if="isLoggedIn && isAdmin"><span class="text-warning">Admin</span></b-nav-item>
                     </b-navbar-nav>
 
                     <b-navbar-nav class="ml-auto">
