@@ -34,27 +34,42 @@ const routes = [
     {
         path: '/create-category',
         name: 'CreateCategory',
-        component: CreateCategory
+        component: CreateCategory,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/edit-category/:id',
         name: 'EditCategory',
-        component: EditCategory
+        component: EditCategory,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/content-creator/posts/create',
         name: 'CreatePost',
-        component: CreatePost
+        component: CreatePost,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/content-creator/posts/edit/:id',
         name: 'EditPost',
-        component: EditPost
+        component: EditPost,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/content-creator/posts',
         name: 'ContentCreatorPosts',
-        component: Posts
+        component: Posts,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/post/:id',
@@ -69,27 +84,60 @@ const routes = [
     {
         path: '/login',
         name: 'Login',
-        component: Login
+        component: Login,
+        meta: {
+            guest: true
+        }
     },
     {
         path: '/register',
         name: 'Register',
-        component: Register
+        component: Register,
+        meta: {
+            guest: true
+        }
     },
-    {
-        path: '/about',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-    }
 ]
 
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+
+        if (localStorage.getItem('token') == null) {
+            next({
+                name: 'Login',
+            })
+        } else {
+            next();
+        }
+    } else if (to.matched.some(record => record.meta.admin)) {
+        if (localStorage.getItem('token') == null) {
+            next({
+                name: 'Login',
+            })
+        } else {
+            if (localStorage.getItem('adminAccess') == null){
+                next({
+                    name: 'Login',
+                })
+            } else {
+                next();
+            }
+        }
+    } else if (to.matched.some(record => record.meta.guest)) {
+        if (localStorage.getItem('token') == null) {
+            next();
+        } else {
+            next({name: 'Home'});
+        }
+    } else {
+        next()
+    }
 })
 
 export default router

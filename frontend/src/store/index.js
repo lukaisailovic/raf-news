@@ -27,6 +27,13 @@ export default new Vuex.Store({
     mutations: {
         setUser: (state, user) => {
             state.user = user;
+            if (user !== null){
+                if (user.userType === 'ADMIN'){
+                    localStorage.setItem('adminAccess','true');
+                } else {
+                    localStorage.removeItem('adminAccess');
+                }
+            }
         },
         setLoading: (state, value) => {
             state.loading = value;
@@ -63,6 +70,7 @@ export default new Vuex.Store({
         async logOut({commit}){
             commit('setUser',null);
             localStorage.removeItem('token');
+            localStorage.removeItem('adminAccess');
         }
     },
     modules: {}
