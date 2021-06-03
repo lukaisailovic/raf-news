@@ -13,6 +13,8 @@ import EditPost from '../views/post/EditPost'
 import Post from '../views/post/Post'
 import FilteredPosts from '../views/post/FilteredPosts'
 import Users from '../views/user/Users'
+import CreateUser from '../views/user/CreateUser'
+import EditUser from '../views/user/EditUser'
 
 Vue.use(VueRouter)
 
@@ -102,6 +104,22 @@ const routes = [
         path: '/users',
         name: 'Users',
         component: Users,
+        meta: {
+            admin: true
+        }
+    },
+    {
+        path: '/users/create',
+        name: 'CreateUser',
+        component: CreateUser,
+        meta: {
+            admin: true
+        }
+    },
+    {
+        path: '/users/edit/:id',
+        name: 'EditUser',
+        component: EditUser,
         meta: {
             admin: true
         }

@@ -9,7 +9,7 @@
         </b-row>
         <b-row v-if="isLoggedIn" class="my-3">
             <b-col>
-                <b-button variant="outline-primary" pill :to="{name:'CreateCategory'}">
+                <b-button variant="outline-primary" pill :to="{name:'CreateUser'}">
                     <b-icon icon="plus-circle"></b-icon>
                     Create new user
                 </b-button>
@@ -37,7 +37,7 @@
                         <b-badge variant="danger" v-else>Inactive</b-badge>
                     </template>
                     <template #cell(action)="data">
-                        <b-button variant="warning"  pill :to="{name: 'EditCategory', params: {id:data.item.id}}">
+                        <b-button variant="warning"  pill :to="{name: 'EditUser', params: {id:data.item.id}}">
                             <b-icon icon="pencil"></b-icon>
                         </b-button>
                         <b-button variant="success"  pill @click.prevent="onToggle(data.item.id,data.item.active)"
