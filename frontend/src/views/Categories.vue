@@ -27,7 +27,7 @@
                     </template>
                     <template #cell(action)="data">
                         <b-button variant="warning" pill>Edit</b-button>
-                        <b-button variant="danger" class="ml-2" pill>Delete</b-button>
+                        <b-button variant="danger" class="ml-2" pill @click.prevent="onDelete(data.item.id)">Delete</b-button>
 
                     </template>
                 </b-table>
@@ -64,7 +64,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['isLoggedIn'])
+        ...mapGetters(['isLoggedIn','getToken'])
     },
     mounted() {
         if (localStorage.getItem('token') !== null) {
@@ -92,6 +92,42 @@ export default {
                 })
                 this.isBusy = false;
                 return [];
+            }
+        },
+        async onDelete(categoryId){
+            try {
+                const token = this.getToken;
+                const response = await axios.delete(`/categories/${categoryId}`,{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (response.status === 200){
+                    this.$bvToast.toast("Category has been deleted successfully", {
+                        title: 'Delete successful',
+                        variant: 'success',
+                        solid: true,
+                        autoHideDelay: 3000,
+                        appendToast: true
+                    })
+                }
+                this.$root.$emit('bv::refresh::table', 'categoryTable')
+            } catch (error) {
+                const data = error.response.data.data;
+                let message = "Invalid data";
+                if (data[0] !== undefined){
+                    message = data[0];
+                }
+                if (data.message !== undefined){
+                    message = data.message;
+                }
+                this.$bvToast.toast(message, {
+                    title: 'Delete error',
+                    variant: 'danger',
+                    solid: true,
+                    autoHideDelay: 3000,
+                    appendToast: true
+                })
             }
         }
     },
