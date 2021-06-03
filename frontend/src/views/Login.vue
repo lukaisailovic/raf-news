@@ -68,7 +68,7 @@ export default {
                 if (response.status === 200){
                     localStorage.setItem('token',response.data.data.token);
                     await this.$store.dispatch('fetchUser');
-                    await this.$router.push('/');
+                    window.location.replace('');
                 } else {
 
                     this.$bvToast.toast(response.data.data.message, {
