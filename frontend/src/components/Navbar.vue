@@ -10,8 +10,8 @@
                     <b-navbar-nav>
                         <b-nav-item to="/">Home</b-nav-item>
                         <b-nav-item :to="{name: 'Popular'}">Popular</b-nav-item>
-                        <b-nav-item :to="{name: 'Categories'}">Categories</b-nav-item>
-                        <b-nav-item :to="{name: 'ContentCreatorPosts'}" v-if="isLoggedIn">Posts</b-nav-item>
+                        <b-nav-item :to="{name: 'Categories'}"><span class="text-info" v-if="isLoggedIn">Categories</span><span v-else>Categories</span></b-nav-item>
+                        <b-nav-item :to="{name: 'ContentCreatorPosts'}" v-if="isLoggedIn"><span class="text-info">Posts</span></b-nav-item>
                     </b-navbar-nav>
 
                     <b-navbar-nav class="ml-auto">
