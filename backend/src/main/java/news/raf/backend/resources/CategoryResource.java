@@ -40,6 +40,17 @@ public class CategoryResource extends BasicResource{
                 .build();
     }
 
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response single(@PathParam("id") String id){
+        Category category = categoryRepository.find(id);
+        if (category == null){
+            return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("Category with that ID does not exist").build();
+        }
+        return ApplicationResponseBuilder.status(Response.Status.OK).data(category).build();
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)

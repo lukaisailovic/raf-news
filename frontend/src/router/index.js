@@ -6,6 +6,7 @@ import Register from '../views/Register.vue'
 import Popular from '../views/Popular.vue'
 import Categories from '../views/Categories.vue'
 import CreateCategory from '../views/CreateCategory.vue'
+import EditCategory from '../views/EditCategory.vue'
 
 
 Vue.use(VueRouter)
@@ -30,6 +31,11 @@ const routes = [
     path: '/create-category',
     name: 'CreateCategory',
     component: CreateCategory
+  },
+  {
+    path: '/edit-category/:id',
+    name: 'EditCategory',
+    component: EditCategory
   },
   {
     path: '/login',
