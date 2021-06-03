@@ -8,7 +8,8 @@ export default new Vuex.Store({
     state: {
         token: localStorage.getItem('token') || '',
         user: null,
-        loading: false
+        loading: false,
+        admin: false,
     },
     getters: {
         isLoggedIn: state => {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
         isLoading: state => {
             return state.loading === true;
         },
+        isAdmin: state => {
+            return state.admin === true;
+        },
         getToken: state => {
             return state.token;
         }
@@ -29,10 +33,14 @@ export default new Vuex.Store({
             state.user = user;
             if (user !== null){
                 if (user.userType === 'ADMIN'){
+                    state.admin = true;
                     localStorage.setItem('adminAccess','true');
                 } else {
+                    state.admin = false;
                     localStorage.removeItem('adminAccess');
                 }
+            } else {
+                state.admin = false;
             }
         },
         setLoading: (state, value) => {
