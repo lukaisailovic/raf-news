@@ -23,7 +23,7 @@
                     :per-page="perPage"
                 >
                     <template #cell(name)="data">
-                        <a href="">{{ data.item.name }}</a>
+                        <b-link :to="{name:'FilteredPosts',params:{param:'category',value:data.item.id}}">{{data.item.name}}</b-link>
                     </template>
                     <template #cell(action)="data">
                         <b-button variant="warning" pill :to="{name: 'EditCategory', params: {id:data.item.id}}"><b-icon icon="pencil"></b-icon></b-button>

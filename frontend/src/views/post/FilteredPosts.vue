@@ -57,6 +57,13 @@ export default {
             return '';
         }
     },
+    watch: {
+        '$route': async function (to, from) {
+            this.parameter = to.params.param;
+            this.value = to.params.value;
+            await this.fetchPosts();
+        }
+    },
     methods: {
         async pageChanged(page){
             this.page = page;
