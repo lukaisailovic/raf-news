@@ -32,7 +32,7 @@
             </b-row>
             <b-row>
                 <b-col>
-                    <b-button size="sm" pill v-for="tag in post.tags" variant="secondary" class="mr-2">{{tag.description}}</b-button>
+                    <b-button size="sm" pill v-for="tag in post.tags" variant="secondary" class="mr-2" :to="{name:'FilteredPosts',params:{param:'tag',value:tag.description}}">{{tag.description}}</b-button>
                 </b-col>
             </b-row>
         </div>

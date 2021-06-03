@@ -39,6 +39,26 @@ public class PostRepository extends AbstractRepository<Post> implements PostRepo
     }
 
     @Override
+    public List<Post> findByTag(int page, String tag) {
+        TypedQuery<Post> query = entityManager.createQuery("select post FROM Post post join post.tags tag where tag.description = :tag order by post.created desc",Post.class);
+        query.setParameter("tag",tag);
+        query.setFirstResult((page-1)*PAGE_SIZE);
+        query.setMaxResults(PAGE_SIZE);
+        return query.getResultList();
+    }
+
+    @Override
+    public long countByTag(String tag) {
+        try {
+            Query query = entityManager.createQuery("select count(post.id) FROM Post post join post.tags tag where tag.description = :tag order by post.created desc");
+            query.setParameter("tag",tag);
+            return (long) query.getSingleResult();
+        }catch (NoResultException e){
+            return 0;
+        }
+    }
+
+    @Override
     public List<Post> mostPopular() {
         TypedQuery<Post> query = entityManager.createQuery("select post FROM Post post order by post.viewCount desc",Post.class);
         query.setMaxResults(PAGE_SIZE);

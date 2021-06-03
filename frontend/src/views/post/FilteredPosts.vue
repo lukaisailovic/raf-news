@@ -50,6 +50,9 @@ export default {
             if (this.parameter === 'category' && this.posts.length > 0){
                 return this.posts[0].category.name;
             }
+            if (this.parameter === 'tag'){
+                return this.value;
+            }
             return '';
         }
     },

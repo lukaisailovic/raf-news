@@ -60,7 +60,10 @@ public class PostResource extends BasicResource{
             posts = this.postRepository.findByCategory(page,value);
             count = (int) this.postRepository.countByCategory(value);
         }
-
+        if(param.equals("tag")){
+            posts = this.postRepository.findByTag(page,value);
+            count = (int) this.postRepository.countByTag(value);
+        }
         return ApplicationResponseBuilder
                 .status(Response.Status.OK)
                 .data(posts)

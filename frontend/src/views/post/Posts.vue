@@ -23,7 +23,7 @@
                     :per-page="perPage"
                 >
                     <template #cell(title)="data">
-                        <a href="">{{ data.item.title }}</a>
+                        <b-link :to="{name: 'Post', params:{id:data.item.id}}">{{ data.item.title }}</b-link>
                     </template>
                     <template #cell(text)="data">
                         {{ shortText(data.item.text) }}
