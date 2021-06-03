@@ -10,6 +10,7 @@ import EditCategory from '../views/category/EditCategory.vue'
 import Posts from '../views/post/Posts'
 import CreatePost from '../views/post/CreatePost'
 import EditPost from '../views/post/EditPost'
+import Post from '../views/post/Post'
 
 Vue.use(VueRouter)
 
@@ -53,6 +54,11 @@ const routes = [
     path: '/content-creator/posts',
     name: 'ContentCreatorPosts',
     component: Posts
+  },
+  {
+    path: '/post/:id',
+    name: 'Post',
+    component: Post
   },
   {
     path: '/login',
