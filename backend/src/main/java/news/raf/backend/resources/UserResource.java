@@ -40,6 +40,18 @@ public class UserResource extends BasicResource{
                 .build();
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    @Authorized
+    @RolesAllowed({"ADMIN"})
+    public Response single(@PathParam("id") String id){
+        User user = userRepository.find(id);
+        if (user == null){
+            return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("User with that id does not exist").build();
+        }
+        return ApplicationResponseBuilder.status(Response.Status.OK).data(user).build();
+    }
 
     @PATCH
     @Path("{id}")
@@ -51,7 +63,7 @@ public class UserResource extends BasicResource{
     public Response edit(@PathParam("id") String id, @Valid EditUserRequest request){
         User user = userRepository.find(id);
         if (user == null){
-            return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("User with that email does not exist").build();
+            return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("User with that id does not exist").build();
         }
         if (!user.getEmail().equals(request.getEmail()) && userRepository.existsBy("email",request.getEmail())){
             return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("User with that email already exists").build();
@@ -120,6 +132,8 @@ public class UserResource extends BasicResource{
         userRepository.save(user);
         return ApplicationResponseBuilder.status(Response.Status.OK).data(user).build();
     }
+
+
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
