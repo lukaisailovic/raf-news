@@ -10,7 +10,6 @@ import news.raf.backend.repositories.interfaces.PostRepositoryInterface;
 import news.raf.backend.repositories.interfaces.TagRepositoryInterface;
 import news.raf.backend.requests.post.CreatePostRequest;
 import news.raf.backend.requests.post.EditPostRequest;
-import news.raf.backend.requests.post.NewCommentRequest;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -149,24 +148,6 @@ public class PostResource extends BasicResource{
         return tagsToAttach;
     }
 
-    @POST
-    @Path("{id}/comment")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @NotEmptyBody
-    public Response newComment(@PathParam("id") String id,@Valid NewCommentRequest request){
-        Post post = postRepository.find(id);
-        if (post == null){
-            return ApplicationResponseBuilder.status(Response.Status.BAD_REQUEST).data("Post with that ID does not exist").build();
-        }
-        Comment comment = new Comment();
-        comment.setAuthor(request.getAuthor());
-        comment.setText(request.getText());
-        post.addComment(comment);
-        postRepository.save(post);
-
-        return ApplicationResponseBuilder.status(Response.Status.OK).data(post).build();
-    }
 
     @DELETE
     @Path("{id}")

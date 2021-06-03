@@ -34,6 +34,7 @@ public class NewsApplication extends ResourceConfig {
                 this.bind(CategoryRepository.class).to(CategoryRepositoryInterface.class).in(Singleton.class);
                 this.bind(PostRepository.class).to(PostRepositoryInterface.class).in(Singleton.class);
                 this.bind(TagRepository.class).to(TagRepositoryInterface.class).in(Singleton.class);
+                this.bind(CommentRepository.class).to(CommentRepositoryInterface.class).in(Singleton.class);
                 /*
                  * Factories
                  */
