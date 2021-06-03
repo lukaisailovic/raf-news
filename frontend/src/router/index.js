@@ -4,9 +4,9 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Popular from '../views/Popular.vue'
-import Categories from '../views/Categories.vue'
-import CreateCategory from '../views/CreateCategory.vue'
-import EditCategory from '../views/EditCategory.vue'
+import Categories from '../views/category/Categories.vue'
+import CreateCategory from '../views/category/CreateCategory.vue'
+import EditCategory from '../views/category/EditCategory.vue'
 
 
 Vue.use(VueRouter)
