@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface PostRepositoryInterface extends AbstractRepositoryInterface<Post>{
     List<Post>  findByCategory(int page, String id);
+    long countByCategory(String id);
     List<Post>  mostPopular();
 }

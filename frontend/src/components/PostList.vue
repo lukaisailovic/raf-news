@@ -10,7 +10,7 @@
         <b-row>
             <b-col>
                 <b-list-group class="mt-2 mb-5">
-                    <Post v-for="post in posts" :post="post" :key="post.id" :display-category="true"/>
+                    <Post v-for="post in posts" :post="post" :key="post.id" :display-category="displayCategory"/>
                 </b-list-group>
             </b-col>
         </b-row>
@@ -23,7 +23,7 @@ import Post from "@/components/Post";
 
 export default {
     name: "PostList",
-    props: ['posts','title'],
+    props: ['posts','title','displayCategory'],
     components: {
         Post
     }

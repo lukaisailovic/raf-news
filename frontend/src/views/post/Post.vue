@@ -14,6 +14,9 @@
                         Author: {{post.author.firstName}} {{post.author.lastName}}
                     </p>
                     <p>
+                        Category: <b-link :to="{name:'FilteredPosts',params:{param:'category',value:post.category.id}}">{{post.category.name}}</b-link>
+                    </p>
+                    <p>
                         Published date: {{getFormattedDate(post.created)}}
                     </p>
                 </b-col>

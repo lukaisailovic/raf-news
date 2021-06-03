@@ -8,7 +8,7 @@
                 {{shortText}}
             </p>
             <p v-if="displayCategory">
-                Category: <b-link href="#foo">{{post.category.name}}</b-link>
+                Category: <b-link :to="{name:'FilteredPosts',params:{param:'category',value:post.category.id}}">{{post.category.name}}</b-link>
             </p>
             <p>
                 Published at: {{publishedDate}}

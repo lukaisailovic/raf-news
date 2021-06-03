@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <PostList :posts="posts" title="Most popular posts"/>
+        <PostList :posts="posts" title="Most popular posts" display-category="true"/>
     </div>
 </template>
 

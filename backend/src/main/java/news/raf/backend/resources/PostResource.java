@@ -13,6 +13,8 @@ import news.raf.backend.requests.post.EditPostRequest;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -37,6 +39,28 @@ public class PostResource extends BasicResource{
     public Response all(@DefaultValue("1") @QueryParam("page") int page){
         List<Post> posts = postRepository.all(page);
         int count = (int) postRepository.count();
+        return ApplicationResponseBuilder
+                .status(Response.Status.OK)
+                .data(posts)
+                .paginated(count,postRepository.getPageSize(),page)
+                .build();
+    }
+
+    @GET
+    @Path("/filter")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response filter(
+            @DefaultValue("1") @QueryParam("page") int page,
+            @NotNull @NotEmpty @QueryParam("param") String param,
+            @NotNull @NotEmpty  @QueryParam("value") String value
+            ){
+        List<Post> posts = new ArrayList<>();
+        int count = 0;
+        if (param.equals("category")){
+            posts = this.postRepository.findByCategory(page,value);
+            count = (int) this.postRepository.countByCategory(value);
+        }
+
         return ApplicationResponseBuilder
                 .status(Response.Status.OK)
                 .data(posts)

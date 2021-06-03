@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <PostList :posts="posts" title="All posts"/>
+        <PostList :posts="posts" title="All posts" display-category="true"/>
     </div>
 </template>
 
