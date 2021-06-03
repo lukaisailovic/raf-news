@@ -7,6 +7,14 @@
                 </h2>
             </b-col>
         </b-row>
+        <b-row class="mt-2">
+            <b-col>
+                <b-button variant="outline-secondary" size="sm" pill :to="{name:'ContentCreatorPosts'}">
+                    <b-icon icon="arrow-left-circle"></b-icon>
+                    Back to the list of posts
+                </b-button>
+            </b-col>
+        </b-row>
         <b-row>
             <b-col>
                 <b-form @submit.prevent="onSubmit">
@@ -67,9 +75,9 @@
                         class="my-3"
                     >
                         <b-form-tags
-                        input-id="tags-input"
-                        v-model="form.tags"
-                        remove-on-delete
+                            input-id="tags-input"
+                            v-model="form.tags"
+                            remove-on-delete
                         ></b-form-tags>
                     </b-form-group>
 
@@ -85,7 +93,7 @@ import axios from "@/plugins/axios";
 
 export default {
     name: "CreatePost",
-    data(){
+    data() {
         return {
             form: {
                 title: "",
@@ -98,13 +106,13 @@ export default {
             categoriesPageNumber: 1,
         }
     },
-    async mounted(){
+    async mounted() {
         let categories = await this.fetchCategories(1);
         for (const category of categories) {
             this.categories.push({value: category.id, text: category.name})
         }
-        while (this.categoriesLastFetched < this.categoriesPageNumber){
-            categories = await this.fetchCategories(this.categoriesLastFetched+1);
+        while (this.categoriesLastFetched < this.categoriesPageNumber) {
+            categories = await this.fetchCategories(this.categoriesLastFetched + 1);
             for (const category of categories) {
                 this.categories.push({value: category.id, text: category.name})
             }
@@ -112,7 +120,7 @@ export default {
     },
     methods: {
 
-        async fetchCategories(page){
+        async fetchCategories(page) {
             try {
                 const res = await axios.get(`/categories?page=${page}`);
                 const categories = res.data.data;
@@ -130,15 +138,15 @@ export default {
                 return [];
             }
         },
-        async onSubmit(){
+        async onSubmit() {
             try {
                 const token = this.$store.getters.getToken;
-                const response = await axios.post('/posts',this.form,{
+                const response = await axios.post('/posts', this.form, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
-                if (response.status === 200){
+                if (response.status === 200) {
                     await this.$router.push('/content-creator/posts')
 
                     this.$bvToast.toast("Post has been created successfully", {
@@ -167,13 +175,13 @@ export default {
                     })
                 }
                 console.log(response)
-            } catch (error){
+            } catch (error) {
                 const data = error.response.data.data;
                 let message = "Invalid data";
-                if (data[0] !== undefined){
+                if (data[0] !== undefined) {
                     message = data[0];
                 }
-                if (data.message !== undefined){
+                if (data.message !== undefined) {
                     message = data.message;
                 }
                 this.$bvToast.toast(message, {

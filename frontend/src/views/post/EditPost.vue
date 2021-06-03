@@ -3,8 +3,16 @@
         <b-row>
             <b-col>
                 <h2>
-                    Create new post
+                    Edit post <span v-if="postId !== null">(ID: {{postId}})</span>
                 </h2>
+            </b-col>
+        </b-row>
+        <b-row class="mt-2">
+            <b-col>
+                <b-button variant="outline-secondary" size="sm" pill :to="{name:'ContentCreatorPosts'}">
+                    <b-icon icon="arrow-left-circle"></b-icon>
+                    Back to the list of posts
+                </b-button>
             </b-col>
         </b-row>
         <b-row>
