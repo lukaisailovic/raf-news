@@ -3,7 +3,7 @@
         <b-row>
             <b-col>
                 <h2>
-                    Create new category
+                    Editing category ({{category.name}})
                 </h2>
             </b-col>
         </b-row>
